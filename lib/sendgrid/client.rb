@@ -14,7 +14,8 @@ module SendGrid
     #   - +version+ -> the version of the API you wish to access,
     #                  currently only "v3" is supported
     #
-    def initialize(api_key: '', host: nil, request_headers: nil, version: nil, impersonate_subuser: nil)
+    def initialize(api_key: '', host: nil, request_headers: nil, version: nil,
+                                impersonate_subuser: nil, proxy_options: {})
       @api_key             = api_key
       @host                = host ? host : 'https://api.sendgrid.com'
       @version             = version ? version : 'v3'
@@ -32,7 +33,8 @@ module SendGrid
 
       @request_headers = @request_headers.merge(request_headers) if request_headers
       @client = Client.new(host: "#{@host}/#{@version}",
-                           request_headers: @request_headers)
+                           request_headers: @request_headers,
+                           proxy_options: proxy_options)
     end
   end
 end
